@@ -111,6 +111,8 @@ namespace SimLib
 
             if (task != null)
                 task.TrySetResult((int)data.dwObjectID);
+
+            FSX.Aircraft.ObjectId = (int)data.dwObjectID;
         }
 
         private static void Sim_OnRecvSimobjectDataBytype(
@@ -126,7 +128,7 @@ namespace SimLib
 
         public static async Task<int> AICreateNonATCAircraft(string modelName,
                                                              string callsign,
-                                                             AircraftsTelemetry state)
+                                                             AircraftState state)
         {
             TaskCompletionSource<int> task = new TaskCompletionSource<int>();
 
@@ -145,6 +147,54 @@ namespace SimLib
                                            OnGround = state.onGround,
                                            Airspeed = state.airspeed
                                        },
+                                       (REQUESTS)task.Task.Id);
+
+            int result = await task.Task;
+
+            objectIdTasks.Remove(task.Task.Id);
+            return result;
+        }
+
+        public static async Task<int> AICreateEnrouteATCAircraft(string modelName,
+                                                             string callsign)
+        {
+            TaskCompletionSource<int> task = new TaskCompletionSource<int>();
+
+            objectIdTasks.Add(task.Task.Id, task);
+            FSX.Sim.
+                AICreateEnrouteATCAircraft(modelName,
+                                       callsign, 001, @"C:\Users\Tiago\Documents\Flight Simulator X Files\LPPTLPPT.pln", 0, false,                                       
+                                       (REQUESTS)task.Task.Id);
+
+            int result = await task.Task;
+
+            objectIdTasks.Remove(task.Task.Id);
+            return result;
+        }
+
+        public static async Task<int> AISetAircraftFlightPlan(uint objectID)
+        {
+            TaskCompletionSource<int> task = new TaskCompletionSource<int>();
+
+            objectIdTasks.Add(task.Task.Id, task);
+            FSX.Sim.
+                AISetAircraftFlightPlan(objectID, @"C:\Users\Tiago\Documents\Flight Simulator X Files\LPPTLPPT.pln",
+                                       (REQUESTS)task.Task.Id);
+
+            int result = await task.Task;
+
+            objectIdTasks.Remove(task.Task.Id);
+            return result;
+        }
+
+        public static async Task<int> AICreateParkedATCAircraft(string modelName,
+                                                             string callsign)
+        {
+            TaskCompletionSource<int> task = new TaskCompletionSource<int>();
+
+            objectIdTasks.Add(task.Task.Id, task);
+            FSX.Sim.
+                AICreateParkedATCAircraft(modelName, callsign, "LPPT",
                                        (REQUESTS)task.Task.Id);
 
             int result = await task.Task;

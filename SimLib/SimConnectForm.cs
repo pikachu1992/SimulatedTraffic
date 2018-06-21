@@ -48,24 +48,109 @@ namespace SimLib
                     // the constructor is similar to SimConnect_Open in the native API 
                     FSX.Sim = new SimConnect("SimLib.SimLibSimConnect", Handle, WM_USER_SIMCONNECT, null, 0);
 
+                    // Register data definitions
+                    SimObjectType<AircraftState>.Register(new SimObjectType<AircraftState>.Field[]
+                    {
+                        new SimObjectType<AircraftState>.Field()
+                        { DatumName = "Title", UnitsName = null,
+                            DatumType = SIMCONNECT_DATATYPE.STRING256 },
+                        new SimObjectType<AircraftState>.Field()
+                        { DatumName = "PLANE LATITUDE", UnitsName = "degrees",
+                            DatumType = SIMCONNECT_DATATYPE.FLOAT64 },
+                        new SimObjectType<AircraftState>.Field()
+                        { DatumName = "PLANE LONGITUDE", UnitsName = "degrees",
+                            DatumType = SIMCONNECT_DATATYPE.FLOAT64 },
+                        new SimObjectType<AircraftState>.Field()
+                        { DatumName = "PLANE ALTITUDE", UnitsName = "feet",
+                            DatumType = SIMCONNECT_DATATYPE.FLOAT64 },
+                        new SimObjectType<AircraftState>.Field()
+                        { DatumName = "PLANE PITCH DEGREES", UnitsName = "degrees",
+                            DatumType = SIMCONNECT_DATATYPE.FLOAT64 },
+                        new SimObjectType<AircraftState>.Field()
+                        { DatumName = "PLANE BANK DEGREES", UnitsName = "degrees",
+                            DatumType = SIMCONNECT_DATATYPE.FLOAT64 },
+                        new SimObjectType<AircraftState>.Field()
+                        { DatumName = "PLANE HEADING DEGREES MAGNETIC", UnitsName = "degrees",
+                            DatumType = SIMCONNECT_DATATYPE.INT32 },
+                        new SimObjectType<AircraftState>.Field()
+                        { DatumName = "PLANE HEADING DEGREES TRUE", UnitsName = "degrees",
+                            DatumType = SIMCONNECT_DATATYPE.FLOAT64 },
+                        new SimObjectType<AircraftState>.Field()
+                        { DatumName = "AIRSPEED TRUE", UnitsName = "knots",
+                            DatumType = SIMCONNECT_DATATYPE.INT32 },
+                        new SimObjectType<AircraftState>.Field()
+                        { DatumName = "SIM ON GROUND", UnitsName = "bool",
+                            DatumType = SIMCONNECT_DATATYPE.INT32 },
+                        new SimObjectType<AircraftState>.Field()
+                        { DatumName = "GEAR POSITION:0", UnitsName = "BCO16",
+                            DatumType = SIMCONNECT_DATATYPE.INT32 },
+                        new SimObjectType<AircraftState>.Field()
+                        { DatumName = "LIGHT LANDING", UnitsName = "bool",
+                            DatumType = SIMCONNECT_DATATYPE.INT32 },
+                        new SimObjectType<AircraftState>.Field()
+                        { DatumName = "LIGHT STROBE", UnitsName = "bool",
+                            DatumType = SIMCONNECT_DATATYPE.INT32 },
+                        new SimObjectType<AircraftState>.Field()
+                        { DatumName = "LIGHT BEACON", UnitsName = "bool",
+                            DatumType = SIMCONNECT_DATATYPE.INT32 },
+                        new SimObjectType<AircraftState>.Field()
+                        { DatumName = "LIGHT NAV", UnitsName = "bool",
+                            DatumType = SIMCONNECT_DATATYPE.INT32 },
+                        new SimObjectType<AircraftState>.Field()
+                        { DatumName = "LIGHT TAXI", UnitsName = "bool",
+                            DatumType = SIMCONNECT_DATATYPE.INT32 },
+                        new SimObjectType<AircraftState>.Field()
+                        { DatumName = "LIGHT RECOGNITION", UnitsName = "bool",
+                            DatumType = SIMCONNECT_DATATYPE.INT32 },
+                        new SimObjectType<AircraftState>.Field()
+                        { DatumName = "FLAPS HANDLE INDEX", UnitsName = "Number",
+                            DatumType = SIMCONNECT_DATATYPE.FLOAT64 },
+                        new SimObjectType<AircraftState>.Field()
+                        { DatumName = "IS GEAR RETRACTABLE", UnitsName = "bool",
+                            DatumType = SIMCONNECT_DATATYPE.INT32 },
+                        new SimObjectType<AircraftState>.Field()
+                        { DatumName = "ELEVATOR POSITION", UnitsName = "Position",
+                            DatumType = SIMCONNECT_DATATYPE.FLOAT64 },
+                        new SimObjectType<AircraftState>.Field()
+                        { DatumName = "AILERON POSITION", UnitsName = "Position",
+                            DatumType = SIMCONNECT_DATATYPE.FLOAT64 },
+                        new SimObjectType<AircraftState>.Field()
+                        { DatumName = "RUDDER POSITION", UnitsName = "Position",
+                            DatumType = SIMCONNECT_DATATYPE.FLOAT64 },
+                        new SimObjectType<AircraftState>.Field()
+                        { DatumName = "GENERAL ENG COMBUSTION:1", UnitsName = "Bool",
+                            DatumType = SIMCONNECT_DATATYPE.INT32 },
+                        new SimObjectType<AircraftState>.Field()
+                        { DatumName = "GENERAL ENG COMBUSTION:2", UnitsName = "Bool",
+                            DatumType = SIMCONNECT_DATATYPE.INT32 },
+                        new SimObjectType<AircraftState>.Field()
+                        { DatumName = "GENERAL ENG COMBUSTION:3", UnitsName = "Bool",
+                            DatumType = SIMCONNECT_DATATYPE.INT32 },
+                        new SimObjectType<AircraftState>.Field()
+                        { DatumName = "GENERAL ENG COMBUSTION:4", UnitsName = "Bool",
+                            DatumType = SIMCONNECT_DATATYPE.INT32 },
+                        new SimObjectType<AircraftState>.Field()
+                        { DatumName = "GENERAL ENG THROTTLE LEVER POSITION:1", UnitsName = "Percent",
+                            DatumType = SIMCONNECT_DATATYPE.INT32 },
+                        new SimObjectType<AircraftState>.Field()
+                        { DatumName = "GENERAL ENG THROTTLE LEVER POSITION:2", UnitsName = "Percent",
+                            DatumType = SIMCONNECT_DATATYPE.INT32 },
+                        new SimObjectType<AircraftState>.Field()
+                        { DatumName = "GENERAL ENG THROTTLE LEVER POSITION:3", UnitsName = "Percent",
+                            DatumType = SIMCONNECT_DATATYPE.INT32 },
+                        new SimObjectType<AircraftState>.Field()
+                        { DatumName = "GENERAL ENG THROTTLE LEVER POSITION:4", UnitsName = "Percent",
+                            DatumType = SIMCONNECT_DATATYPE.INT32 },
+                        new SimObjectType<AircraftState>.Field()
+                        { DatumName = "LIGHT ON STATES", UnitsName = "Mask",
+                            DatumType = SIMCONNECT_DATATYPE.INT32 },
+                    });
 
                     SimObjectType<Radios>.Register(new SimObjectType<Radios>.Field[]
                     {
                         new SimObjectType<Radios>.Field()
                         { DatumName = "TRANSPONDER CODE:1", UnitsName = "BCO16",
                             DatumType = SIMCONNECT_DATATYPE.INT32 },
-                         new SimObjectType<Radios>.Field()
-                        { DatumName = "COM ACTIVE FREQUENCY:1", UnitsName = "MHz",
-                            DatumType = SIMCONNECT_DATATYPE.FLOAT64 },
-                        new SimObjectType<Radios>.Field()
-                        { DatumName = "COM STANDBY FREQUENCY:1", UnitsName = "MHz",
-                            DatumType = SIMCONNECT_DATATYPE.FLOAT64 },
-                        new SimObjectType<Radios>.Field()
-                        { DatumName = "COM ACTIVE FREQUENCY:2", UnitsName = "MHz",
-                            DatumType = SIMCONNECT_DATATYPE.FLOAT64 },
-                        new SimObjectType<Radios>.Field()
-                        { DatumName = "COM STANDBY FREQUENCY:2", UnitsName = "MHz",
-                            DatumType = SIMCONNECT_DATATYPE.FLOAT64 },
                     });
 
                     //RegisterEvents();

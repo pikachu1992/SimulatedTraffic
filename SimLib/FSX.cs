@@ -13,6 +13,41 @@ namespace SimLib
 
         internal static Dictionary<Type, int> typeMap = new Dictionary<Type, int>();
 
+        public static class Player
+        {
+            public static string Callsign
+            {
+                get { return obj.Callsign; }
+                set { obj.Callsign = value; }
+            }
+
+            private static Aircraft obj = new Aircraft();
+
+            public static async Task<Aircraft> Get()
+            {
+                await obj.Read();
+
+                return obj;
+            }
+        }
+
+        public static class Traffic
+        {
+            private static Dictionary<string, Aircraft> knownTraffic
+                = new Dictionary<string, Aircraft>();
+
+            public static void Set(Aircraft traffic)
+            {
+                if (knownTraffic.ContainsKey(traffic.Callsign))
+                    knownTraffic[traffic.Callsign].Update(traffic);
+                else
+                {
+                    knownTraffic.Add(traffic.Callsign, traffic);
+                    traffic.Create();
+                }
+            }
+        }
+
         public class Aircraft
         {
             public string Callsign
@@ -21,21 +56,21 @@ namespace SimLib
             public string ModelName
             { get; set; }
 
-            public int ObjectId
+            public static int ObjectId
             { get; internal set; }
 
-            public AircraftsTelemetry State
+            public AircraftState State
             { get; set; }
 
             public async void Create()
             {
-                ObjectId = await SimObjectType<AircraftsTelemetry>.
+                ObjectId = await SimObjectType<AircraftState>.
                     AICreateNonATCAircraft(ModelName, Callsign, State);
             }
 
-            internal async Task<AircraftsTelemetry> Read()
+            internal async Task<AircraftState> Read()
             {
-                State = await SimObjectType<AircraftsTelemetry>
+                State = await SimObjectType<AircraftState>
                     .RequestDataOnSimObjectType();
 
                 return State;
@@ -45,7 +80,7 @@ namespace SimLib
             {
                 State = newTraffic.State;
 
-                await SimObjectType<AircraftsTelemetry>.
+                await SimObjectType<AircraftState>.
                     SetDataOnSimObject((uint)ObjectId, State);
             }
         }
