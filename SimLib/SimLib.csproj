@@ -33,6 +33,7 @@
     <Reference Include="Microsoft.FlightSimulator.SimConnect, Version=10.0.61259.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Microsoft.FlightSimulator.SimConnect.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -45,9 +46,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AircraftsTelemetry.cs" />
     <Compile Include="Radios.cs" />
     <Compile Include="SimObjectType.cs" />
-    <Compile Include="AircraftState.cs" />
     <Compile Include="SimConnectForm.AITraffic.cs">
       <SubType>Form</SubType>
     </Compile>

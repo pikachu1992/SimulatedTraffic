@@ -51,35 +51,7 @@ namespace SimLib
             tasks.Remove(task.Task.Id);
             return result;
         }
-
-        public static async Task<int> AICreateNonATCAircraft(string modelName,
-                                                             string callsign,
-                                                             AircraftState state)
-        {
-            TaskCompletionSource<int> task = new TaskCompletionSource<int>();
-
-            objectIdTasks.Add(task.Task.Id, task);
-            FSX.Sim.
-                AICreateNonATCAircraft(modelName,
-                                       callsign,
-                                       new SIMCONNECT_DATA_INITPOSITION()
-                                       {
-                                           Latitude = state.latitude,
-                                           Longitude = state.longitude,
-                                           Altitude = state.altitude,
-                                           Pitch = state.pitch,
-                                           Bank = state.bank,
-                                           Heading = state.heading,
-                                           OnGround = state.onGround,
-                                           Airspeed = state.airspeed
-                                       },
-                                       (REQUESTS)task.Task.Id);
-
-            int result = await task.Task;
-
-            objectIdTasks.Remove(task.Task.Id);
-            return result;
-        }
+      
 
         public static async Task<bool> SetDataOnSimObject(uint objectId, T data)
         {
@@ -150,6 +122,35 @@ namespace SimLib
 
             if (task != null)
                 task.TrySetResult((T)data.dwData[0]);
+        }
+
+        public static async Task<int> AICreateNonATCAircraft(string modelName,
+                                                             string callsign,
+                                                             AircraftsTelemetry state)
+        {
+            TaskCompletionSource<int> task = new TaskCompletionSource<int>();
+
+            objectIdTasks.Add(task.Task.Id, task);
+            FSX.Sim.
+                AICreateNonATCAircraft(modelName,
+                                       callsign,
+                                       new SIMCONNECT_DATA_INITPOSITION()
+                                       {
+                                           Latitude = state.latitude,
+                                           Longitude = state.longitude,
+                                           Altitude = state.altitude,
+                                           Pitch = state.pitch,
+                                           Bank = state.bank,
+                                           Heading = state.magHeading,
+                                           OnGround = state.onGround,
+                                           Airspeed = state.airspeed
+                                       },
+                                       (REQUESTS)task.Task.Id);
+
+            int result = await task.Task;
+
+            objectIdTasks.Remove(task.Task.Id);
+            return result;
         }
     }
 }
