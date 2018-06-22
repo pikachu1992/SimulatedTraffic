@@ -153,6 +153,13 @@ namespace SimLib
                             DatumType = SIMCONNECT_DATATYPE.INT32 },
                     });
 
+                    SimObjectType<AircraftsTelemetry>.RegisterAITraffic(new SimObjectType<AircraftsTelemetry>.Field[]
+                    {
+                         new SimObjectType<AircraftsTelemetry>.Field()
+                        { DatumName = "AI TRAFFIC STATE", UnitsName = null,
+                            DatumType = SIMCONNECT_DATATYPE.STRING256 },
+                    });
+
                     //RegisterEvents();
                 }
                 catch (COMException)

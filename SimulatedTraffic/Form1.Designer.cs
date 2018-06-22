@@ -33,6 +33,8 @@
             this.btnCreateAITraffic = new System.Windows.Forms.Button();
             this.btnSetAiFlightPlan = new System.Windows.Forms.Button();
             this.btnConnect = new System.Windows.Forms.Button();
+            this.btnSendAITrafficInstruction = new System.Windows.Forms.Button();
+            this.btnRequestAIState = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // txtLog
@@ -89,11 +91,33 @@
             this.btnConnect.UseVisualStyleBackColor = true;
             this.btnConnect.Click += new System.EventHandler(this.btnConnect_Click);
             // 
+            // btnSendAITrafficInstruction
+            // 
+            this.btnSendAITrafficInstruction.Location = new System.Drawing.Point(93, 590);
+            this.btnSendAITrafficInstruction.Name = "btnSendAITrafficInstruction";
+            this.btnSendAITrafficInstruction.Size = new System.Drawing.Size(75, 23);
+            this.btnSendAITrafficInstruction.TabIndex = 6;
+            this.btnSendAITrafficInstruction.Text = "SendInstruction";
+            this.btnSendAITrafficInstruction.UseVisualStyleBackColor = true;
+            this.btnSendAITrafficInstruction.Click += new System.EventHandler(this.btnSendAITrafficInstruction_Click);
+            // 
+            // btnRequestAIState
+            // 
+            this.btnRequestAIState.Location = new System.Drawing.Point(174, 590);
+            this.btnRequestAIState.Name = "btnRequestAIState";
+            this.btnRequestAIState.Size = new System.Drawing.Size(75, 23);
+            this.btnRequestAIState.TabIndex = 7;
+            this.btnRequestAIState.Text = "RequestAIState";
+            this.btnRequestAIState.UseVisualStyleBackColor = true;
+            this.btnRequestAIState.Click += new System.EventHandler(this.btnRequestAIState_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(384, 625);
+            this.Controls.Add(this.btnRequestAIState);
+            this.Controls.Add(this.btnSendAITrafficInstruction);
             this.Controls.Add(this.btnConnect);
             this.Controls.Add(this.btnSetAiFlightPlan);
             this.Controls.Add(this.btnCreateAITraffic);
@@ -112,6 +136,8 @@
         private System.Windows.Forms.Button btnCreateAITraffic;
         private System.Windows.Forms.Button btnSetAiFlightPlan;
         private System.Windows.Forms.Button btnConnect;
+        private System.Windows.Forms.Button btnSendAITrafficInstruction;
+        private System.Windows.Forms.Button btnRequestAIState;
     }
 }
 

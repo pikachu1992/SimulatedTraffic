@@ -7,7 +7,11 @@ namespace SimLib
 {
     public enum REQUESTS { }
 
+    public enum AIREQUESTS { }
+
     public enum DEFINITIONS { }
+
+    public enum AITRAFFIC { }
 
     public static class SimObjectType<T>
     {
@@ -69,7 +73,78 @@ namespace SimLib
             return result;
         }
 
+        public static async Task<T> RequestDataOnSimObjectAITraffic(uint objectID)
+        {
+            TaskCompletionSource<T> task = new TaskCompletionSource<T>();
+
+            tasks.Add(task.Task.Id, task);
+            FSX.Sim.
+                RequestDataOnSimObject(
+                (AIREQUESTS)task.Task.Id,
+                (AITRAFFIC)FSX.typeMap[typeof(T)],
+                objectID,
+                SIMCONNECT_PERIOD.SIM_FRAME,
+                SIMCONNECT_DATA_REQUEST_FLAG.DEFAULT,
+                0,
+                0,
+                0);
+
+            T result = await task.Task;
+
+            tasks.Remove(task.Task.Id);
+            return result;
+        }
+
+        public static async Task<bool> SetDataOnSimObjectAITraffic(uint objectId, T data)
+        {
+            TaskCompletionSource<bool> task = new TaskCompletionSource<bool>();
+
+            resultTasks.Add(task.Task.Id, task);
+            FSX.Sim.SetDataOnSimObject((AITRAFFIC)FSX.typeMap[typeof(T)],
+                                       objectId,
+                                       SIMCONNECT_DATA_SET_FLAG.DEFAULT,
+                                       data);
+
+            bool result = await task.Task;
+
+            resultTasks.Remove(task.Task.Id);
+            return result;
+        }
+
         public static void Register(Field[] fields)
+        {
+            int defineId = FSX.idMap.Count;
+
+            try
+            {
+                // register all fields in FSX.Sim
+                // TODO: lookup type decorated fields using reflection
+                foreach (Field field in fields)
+                    FSX.Sim.
+                        AddToDataDefinition((DEFINITIONS)defineId,
+                                            field.DatumName,
+                                            field.UnitsName,
+                                            field.DatumType,
+                                            0.0f,
+                                            SimConnect.SIMCONNECT_UNUSED);
+
+                FSX.Sim.
+                    RegisterDataDefineStruct<T>((DEFINITIONS)defineId);
+
+                FSX.Sim.OnRecvSimobjectDataBytype +=
+                    Sim_OnRecvSimobjectDataBytype;
+                FSX.Sim.OnRecvAssignedObjectId += Sim_OnRecvAssignedObjectId;
+            }
+            catch (COMException ex)
+            {
+                throw ex;
+            }
+
+            FSX.idMap.Add(defineId, typeof(T));
+            FSX.typeMap.Add(typeof(T), defineId);
+        }
+
+        public static void RegisterAITraffic(Field[] fields)
         {
             int defineId = FSX.idMap.Count;
 

@@ -72,17 +72,6 @@ namespace SimulatedTraffic
         private async void btnCreateAITraffic_Click(object sender, EventArgs e)
         {           
 
-            AircraftsTelemetry t = new AircraftsTelemetry();
-
-            t.latitude = 38.767214;
-            t.longitude = -9.143428;
-            t.altitude = 380;
-            t.pitch = 0;
-            t.bank = 0;
-            t.magHeading = 030;
-            t.onGround = 1;
-            t.airspeed = 0;
-
             FSX.Sim.OnRecvAssignedObjectId += Sim_OnRecvAssignedObjectId;
 
             await SimObjectType<AircraftsTelemetry>.AICreateParkedATCAircraft("C172", "TSZ101");         
@@ -112,6 +101,19 @@ namespace SimulatedTraffic
             webSocket.Connect();
 
             await Send();
+        }
+
+        private async void btnSendAITrafficInstruction_Click(object sender, EventArgs e)
+        {
+            AircraftsTelemetry t = new AircraftsTelemetry();
+
+            await SimObjectType<AircraftsTelemetry>.SetDataOnSimObjectAITraffic(objID, t);
+        }
+
+        private async void btnRequestAIState_Click(object sender, EventArgs e)
+        {
+            AircraftsTelemetry t = await SimObjectType<AircraftsTelemetry>.RequestDataOnSimObjectAITraffic(Convert.ToUInt32(objID));
+            displayText(JsonConvert.SerializeObject(t.title));
         }
     }
 }
