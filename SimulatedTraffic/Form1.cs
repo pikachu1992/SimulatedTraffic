@@ -105,7 +105,7 @@ namespace SimulatedTraffic
 
         private async void btnConnect_Click(object sender, EventArgs e)
         {
-            webSocket = new WebSocket(@"wss://fa-live.herokuapp.com/chat");
+            webSocket = new WebSocket(@"wss://simconn-tests.herokuapp.com/chat");
 
             webSocket.OnMessage += Receive;
 
