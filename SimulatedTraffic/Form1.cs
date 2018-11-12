@@ -17,7 +17,7 @@ namespace SimulatedTraffic
         int response = 1;
 
         // Output text 
-        string output = "";
+        string output = "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n";
 
         public Form1()
         {
@@ -58,7 +58,7 @@ namespace SimulatedTraffic
             FSX.Aircraft traffic = JsonConvert.DeserializeObject<FSX.Aircraft>(
                 e.Data);
 
-            traffic.ModelName = "C172";
+            traffic.ModelName = "Cessna Skyhawk 172SP Paint1";
 
             FSX.Traffic.Set(traffic);
         }
@@ -85,7 +85,7 @@ namespace SimulatedTraffic
 
             FSX.Sim.OnRecvAssignedObjectId += Sim_OnRecvAssignedObjectId;
 
-            await SimObjectType<AircraftsTelemetry>.AICreateParkedATCAircraft("C172", "TSZ101");         
+            await SimObjectType<AircraftsTelemetry>.AICreateParkedATCAircraft("Cessna Skyhawk 172SP Paint1", "TSZ101");         
             
         }
 
